@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
        <meta charset="UTF-8">
-       <title>Hello World</title>
+       <title>Random</title>
        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
@@ -10,25 +10,25 @@
       <canvas id="canvas" height="600px" width="800px"></canvas>
 
       <script>
+ //Plot a random x
+ var x = Math.random() * 700;
 
-        //Plot a random x
-        var x = Math.random() * 700;
+//Plot a random y
+var y = Math.random() * 500;
 
-        //Plot a random y
-        var y = Math.random() * 500;
+//Initialize the canvas
+var canvas = document.getElementById('canvas');
 
-        //Initialize the canvas
-        var canvas = document.getElementById('canvas');
+//create a context
+var ctx = canvas.getContext('2d');
 
-        //create a context
-        var ctx = canvas.getContext('2d');
+//Create a random color
+ctx.fillStyle = '#' + Math.floor(Math.random()*16777215).toString(16);
 
-        //Create a random color
-        ctx.fillStyle = '#' + Math.floor(Math.random()*16777215).toString(16);
-
-        //Create the rectangle
-        ctx.fillRect(x, y, 150, 150);
-        //Create a circle
+//Create the rectangle
+ctx.fillRect(x, y, 100, 100);
+        
+//Create a circle
 ctx.beginPath();
 ctx.arc(230, 400, 83, 0, 2 * Math.PI);
 ctx.stroke();

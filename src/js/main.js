@@ -30,13 +30,16 @@ var draw = (function() {
     lx = false,
     ly = false,
 
-
-
     //What shape are we drawing?
     shape='',
 
     //Are we drawimg a path?
     isDrawing=false;
+
+    //stroke color
+    var stroke='';
+    //fill color
+    var fill='';
 
   return {
 
@@ -70,6 +73,12 @@ var draw = (function() {
       y2=y;
     },
 
+    //Set the x3,y3
+    setEnd: function(){
+      x3=x;
+      y3=y;
+    },
+
     //Sets the shape to be drawn
     setShape: function(shp) {
       shape = shp;
@@ -78,6 +87,37 @@ var draw = (function() {
     getShape: function() {
       return shape;
     },
+
+//Set a random color
+randColor: function(){
+  return '#'+ Math.floor(Math.random()*16777215).toString(16)
+},
+
+//Setter for Stroke
+setStrokeColor: function(color){
+  stroke = color;
+},
+//Getter for Stroke
+getStrokeColor: function(){
+  if(stroke.length > 6){
+    return stroke;
+  }
+  return this.randColor();
+},
+
+//Setter for Fill
+setFillColor: function(color){
+  fill = color;
+},
+
+//Getter for Fill
+getFillColor: function(){
+  if(fill.length > 6){
+    return fill;
+  }
+  return this.randColor();
+},
+
 //Sets the path to be drawn
     setIsDrawing: function(bool) {
       isDrawing = bool;
@@ -86,8 +126,6 @@ var draw = (function() {
     getIsDrawing: function() {
       return isDrawing;
     },
-
-
 
     //Draws the selected shape
     draw: function() {
@@ -101,22 +139,25 @@ var draw = (function() {
         this.drawPath();
       } else if( shape==='circle' ) {
         this.drawCircle();
-      } else if ( shape==='triangle' ) {
-        this.drawTriangle();
+      } else if( shape==='triangle' ) {
+        this.drawTri();
         alert('Please choose a shape');
       }
       ctx.save();
     },
 
     //Draw a triangle
-    drawTriangle: function () {
+    drawTri: function() {
+      //Start by using random fill colors.
       ctx.strokeStyle = '#'+Math.floor(Math.random()*16777215).toString(16);
-      
+      ctx.fillStyle = '#'+Math.floor(Math.random()*16777215).toString(16);
       ctx.beginPath();
-      ctx.moveTo(x1, y1, z1);
-      ctx.lineTo(x2, y2, z2);
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.lineTo(x3, y3);
+      ctx.closePath();
       ctx.stroke();
-      ctx.fillTri();
+      ctx.fill();
     },
     
 
@@ -212,9 +253,6 @@ draw.getCanvas().addEventListener('mouseup', function() {
   draw.setIsDrawing(false);
 }, false);
 
-
-
-
 document.getElementById('btnRect').addEventListener('click', function(){
     draw.setShape('rectangle');
 }, false);
@@ -231,6 +269,22 @@ document.getElementById('btnPath').addEventListener('click', function(){
     draw.setShape('path');
 }, false);
 
-document.getElementById('btnTriangle').addEventListener('click', function(){
+document.getElementById('btnTri').addEventListener('click', function(){
   draw.setShape('triangle');
 }, false);
+
+document.getElementById('strokeColor').addEventListener('change', function(){
+  draw.setStrokeColor(document.getElementById('strokeColor').value);
+});
+
+document.getElementById('randstrokeColor').addEventListener('change', function(){
+  draw.setStrokeColor('');
+});
+
+document.getElementById('fillColor').addEventListener('change', function(){
+  draw.setFillColor(document.getElementById('fillColor').value);
+});
+
+document.getElementById('randFillColor').addEventListener('change', function(){
+  draw.setFillColor('');
+});
