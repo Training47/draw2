@@ -141,6 +141,7 @@ getFillColor: function(){
         this.drawCircle();
       } else if( shape==='triangle' ) {
         this.drawTri();
+      } else {
         alert('Please choose a shape');
       }
       ctx.save();
